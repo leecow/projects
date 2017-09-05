@@ -1,4 +1,4 @@
-# Generate the following for a given release version:
+# Generate the following for a given 2.x release version:
 #  - file list
 #  - expected blob location
 #  - final DLC url
