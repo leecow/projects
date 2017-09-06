@@ -7,43 +7,43 @@
 
 # Versions
 VER_SDK="2.0.1"
-VER_FX="2.0.1"
+VER_RUNTIME="2.0.1"
 
 # Locations
 BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-BLOB_ROOT_FX="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
+BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
 BLOB_ROOT_CHECKSUM="https://dotnetcli.blob.core.windows.net/dotnet/checksums/"
 DLC="https://download.microsoft.com/download/"
 DLC_ROOT_SDK="7/3/A/73A3E4DC-F019-47D1-9951-0453676E059B"
-DLC_ROOT_FX="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
+DLC_ROOT_RUNTIME="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
 
-printf "%s\n" "# .NET Core "$VER_FX
+printf "%s\n" "# .NET Core "$VER_RUNTIME
 printf "%s\n" 
-printf "%s\n" ".NET Core "$VER_FX" comprises:"
+printf "%s\n" ".NET Core "$VER_RUNTIME" comprises:"
 printf "%s\n" 
-printf "%s\n" "* .NET Core Runtime "$VER_FX
+printf "%s\n" "* .NET Core Runtime "$VER_RUNTIME
 printf "%s\n" "* .NET Core SDK "$VER_SDK
 
 printf "%s\n" 
 printf "%s\n" "|         | SDK Installer                                         | SDK Binaries                                                         | Runtime Installer                                                  | Runtime Binaries                                                   |"
 printf "%s\n" "| ------- | :---------------------------------------------------: | :-------------------------------------------------------------------:| :----------------------------------------------------------------: | :----------------------------------------------------------------: |"
-printf "%s\n" "| Windows | [32-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-$VER_SDK-win-x86.exe) / [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-win-x64.exe)  | [32-bit]("$DLC$DLC_ROOT_FX"/dotnet-sdk-"$VER_SDK"-win-x86.zip) / [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-win-x64.zip) | [32-bit]("$DLC$DLC_ROOT_FX"/dotnet-runtime-"$VER_FX"-win-x86.exe) / [64-bit]("$DLC$DLC_ROOT_FX"/dotnet-runtime-"$VER_FX"-win-x64.exe) | [32-bit]("$DLC$DLC_ROOT_FX"/dotnet-runtime-"$VER_FX"-win-x86.zip) / [64-bit]("$DLC$DLC_ROOT_FX"/dotnet-runtime-"$VER_FX"-win-x64.zip) |"
-printf "%s\n" "| macOS   | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-$VER_SDK-osx-x64.pkg)  | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-osx-x64.tar.gz)| [64-bit]("$DLC$DLC_ROOT_FX"/dotnet-runtime-"$VER_FX"-osx-x64.pkg)      | [64-bit]("$DLC$DLC_ROOT_FX"/dotnet-runtime-"$VER_FX"-osx-x64.tar.gz)   |"
-printf "%s\n" "| Linux * | See installations steps below                         | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-linux-x64.tar.gz)     | -                                                                  | [64-bit]("$DLC$DLC_ROOT_FX"/dotnet-runtime-"$VER_FX"-linux-x64.tar.gz) |"
+printf "%s\n" "| Windows | [32-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-$VER_SDK-win-x86.exe) / [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-win-x64.exe)  | [32-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-sdk-"$VER_SDK"-win-x86.zip) / [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-win-x64.zip) | [32-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-win-x86.exe) / [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-win-x64.exe) | [32-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-win-x86.zip) / [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-win-x64.zip) |"
+printf "%s\n" "| macOS   | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-$VER_SDK-osx-x64.pkg)  | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-osx-x64.tar.gz)| [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-osx-x64.pkg)      | [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-osx-x64.tar.gz)   |"
+printf "%s\n" "| Linux * | See installations steps below                         | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-linux-x64.tar.gz)     | -                                                                  | [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-linux-x64.tar.gz) |"
 
 printf "%s\n" 
 printf "%s\n" "**Checksum** files to verify downloads are available as follows:"
-printf "%s\n" "* [Checksums_Runtime]("$BLOB_ROOT_CHECKSUM$VER_FX"-runtime-sha.txt)"
+printf "%s\n" "* [Checksums_Runtime]("$BLOB_ROOT_CHECKSUM$VER_RUNTIME"-runtime-sha.txt)"
 printf "%s\n" "* [Checksums_SDK]("$BLOB_ROOT_CHECKSUM$VER_SDK"-sdk-sha.txt)"
 printf "%s\n"
 printf "%s\n" "**Debug Symbols**"
-printf "%s\n" "* [Shared Framework]("$DLC$DLC_ROOT_FX"/corefx-2.0-symbols.zip)"
-printf "%s\n" "* [Runtime]("$DLC$DLC_ROOT_FX"/coreclr-2.0-symbols.zip)"
+printf "%s\n" "* [Shared Framework]("$DLC$DLC_ROOT_RUNTIME"/corefx-2.0-symbols.zip)"
+printf "%s\n" "* [Runtime]("$DLC$DLC_ROOT_RUNTIME"/coreclr-2.0-symbols.zip)"
 
 printf "%s\n" 
 printf "%s\n" "## Docker"
 printf "%s\n" 
-printf "%s\n" "Images for .NET Core "$VER_FX" are available on [Docker](https://hub.docker.com/r/microsoft/dotnet/)."
+printf "%s\n" "Images for .NET Core "$VER_RUNTIME" are available on [Docker](https://hub.docker.com/r/microsoft/dotnet/)."
 
 
 printf "%s\n" "## Installing .NET Core on Linux"

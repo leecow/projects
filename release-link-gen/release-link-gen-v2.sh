@@ -18,14 +18,14 @@
 
 # Versions
 VER_SDK="2.0.1"
-VER_FX="2.0.1"
+VER_RUNTIME="2.0.1"
 
 # Locations
 BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-BLOB_ROOT_FX="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
+BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
 DLC="https://download.microsoft.com/download/"
 DLC_ROOT_SDK="7/3/A/73A3E4DC-F019-47D1-9951-0453676E059B"
-DLC_ROOT_FX="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
+DLC_ROOT_RUNTIME="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
 
 # Names
 SDK="dotnet-sdk"
@@ -54,7 +54,7 @@ declare -a runtime_installers=('osx-x64.pkg' 'win-x64.exe' 'win-x86.exe' 'debian
     for i in "${runtime_installers[@]}"
         do
         : 
-        printf "%s\n" $RUNTIME"-"$VER_FX"-"$i" "$BLOB_ROOT_FX$VER_FX"/"$RUNTIME"-"$VER_FX"-"$i" "$DLC$DLC_ROOT_FX"/"$RUNTIME"-"$VER_FX"-"$i
+        printf "%s\n" $RUNTIME"-"$VER_RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$RUNTIME"-"$VER_RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$RUNTIME"-"$VER_RUNTIME"-"$i
     done
     printf "%s\n"
 
@@ -65,7 +65,7 @@ declare -a host_installers=('debian.8-x64.deb' 'debian.9-x64.deb' 'ubuntu.14.04-
     for i in "${host_installers[@]}"
     do
         : 
-        printf "%s\n" $HOST"-"$VER_FX"-"$i" "$BLOB_ROOT_FX$VER_FX"/"$HOST"-"$VER_FX"-"$i" "$DLC$DLC_ROOT_FX"/"$HOST"-"$VER_FX"-"$i
+        printf "%s\n" $HOST"-"$VER_RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$HOST"-"$VER_RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOST"-"$VER_RUNTIME"-"$i
     done
     printf "%s\n"
 
@@ -76,7 +76,7 @@ declare -a hostfxr_installers=('debian.8-x64.deb' 'debian.9-x64.deb' 'ubuntu.14.
     for i in "${hostfxr_installers[@]}"
         do
         : 
-        printf "%s\n" $HOSTFXR"-"$VER_FX"-"$i" "$BLOB_ROOT_FX$VER_FX"/"$HOSTFXR"-"$VER_FX"-"$i" "$DLC$DLC_ROOT_FX"/"$HOSTFXR"-"$VER_FX"-"$i
+        printf "%s\n" $HOSTFXR"-"$VER_RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$HOSTFXR"-"$VER_RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOSTFXR"-"$VER_RUNTIME"-"$i
     done
     printf "%s\n"
 
@@ -102,6 +102,6 @@ declare -a runtime_archives=('linux-x64.tar.gz' 'osx-x64.tar.gz' 'win-x64.zip' '
     for i in "${runtime_archives[@]}"
         do
         : 
-        printf "%s\n" $RUNTIME"-"$VER_FX"-"$i" "$BLOB_ROOT_FX$VER_FX"/"$RUNTIME"-"$VER_FX"-"$i" "$DLC$DLC_ROOT_FX"/"$RUNTIME"-"$VER_FX"-"$i
+        printf "%s\n" $RUNTIME"-"$VER_RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$RUNTIME"-"$VER_RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$RUNTIME"-"$VER_RUNTIME"-"$i
     done
     printf "%s\n"

@@ -23,14 +23,14 @@
 
 # Versions
 VER_SDK="1.1.3"
-VER_FX="1.1.3"
+VER_RUNTIME="1.1.3"
 
 # Locations
 BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-BLOB_ROOT_FX="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
+BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
 DLC="https://download.microsoft.com/download/"
 DLC_ROOT_SDK="7/8/5/7852163D-1A56-4642-84B6-60A8537343EF"
-DLC_ROOT_FX="F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F"
+DLC_ROOT_RUNTIME="F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F"
 
 # Names
 DEV="dotnet-dev"
@@ -65,34 +65,34 @@ declare -a sdk_installers=('ubuntu-x64.'$VER_SDK'.deb' 'ubuntu.16.04-x64.'$VER_S
 
 # Runtime Installers
 printf "%s\n\n" "Runtime Installers"
-declare -a runtime_installers=('osx-x64.'$VER_FX'.pkg' 'win-x64.'$VER_FX'.exe' 'win-x86.'$VER_FX'.exe')
+declare -a runtime_installers=('osx-x64.'$VER_RUNTIME'.pkg' 'win-x64.'$VER_RUNTIME'.exe' 'win-x86.'$VER_RUNTIME'.exe')
 
     for i in "${runtime_installers[@]}"
         do
         : 
-        printf "%s\n" $RUNTIME"-"$i" "$BLOB_ROOT_FX$VER_FX"/"$RUNTIME"-"$i" "$DLC$DLC_ROOT_FX"/"$RUNTIME"-"$i
+        printf "%s\n" $RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$RUNTIME"-"$i
     done
     printf "%s\n"
  
 # Host
 printf "%s\n\n" "Host (dotnet.exe)"
-declare -a host_installers=('ubuntu-x64.'$VER_FX'.deb' 'ubuntu.16.04-x64.'$VER_FX'.deb' 'ubuntu.16.10-x64.'$VER_FX'.deb')
+declare -a host_installers=('ubuntu-x64.'$VER_RUNTIME'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME'.deb' 'ubuntu.16.10-x64.'$VER_RUNTIME'.deb')
 
     for i in "${host_installers[@]}"
     do
         : 
-        printf "%s\n" $HOST"-"$i" "$BLOB_ROOT_FX$VER_FX"/"$HOST"-"$i" "$DLC$DLC_ROOT_FX"/"$HOST"-"$i
+        printf "%s\n" $HOST"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$HOST"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOST"-"$i
     done
     printf "%s\n"
 
 # HostFXR
 printf "%s\n\n" "HostFXR"
-declare -a hostfxr_installers=('ubuntu-x64.'$VER_FX'.deb' 'ubuntu.16.04-x64.'$VER_FX'.deb' 'ubuntu.16.10-x64.'$VER_FX'.deb')
+declare -a hostfxr_installers=('ubuntu-x64.'$VER_RUNTIME'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME'.deb' 'ubuntu.16.10-x64.'$VER_RUNTIME'.deb')
 
     for i in "${hostfxr_installers[@]}"
     do
         : 
-        printf "%s\n" $HOSTFXR"-"$i" "$BLOB_ROOT_FX$VER_FX"/"$HOSTFXR"-"$i" "$DLC$DLC_ROOT_FX"/"$HOSTFXR"-"$i
+        printf "%s\n" $HOSTFXR"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$HOSTFXR"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOSTFXR"-"$i
     done
     printf "%s\n"
 
@@ -112,11 +112,11 @@ declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.t
 
 # Runtime Binary Archives
 printf "%s\n\n" "Runtime Binary Archives"
-declare -a runtime_archives=('win-x64.'$VER_FX'.zip' 'win-x86.'$VER_FX'.zip' 'osx-x64.'$VER_FX'.tar.gz' 'centos-x64.'$VER_FX'.tar.gz' 'debian-x64.'$VER_FX'.tar.gz' 'fedora.23-x64.'$VER_FX'.tar.gz' 'rhel-x64.'$VER_FX'.tar.gz' 'ubuntu-x64.'$VER_FX'.tar.gz' 'ubuntu.16.04-x64.'$VER_FX'.tar.gz' 'ubuntu.16.10-x64.'$VER_FX'.tar.gz')
+declare -a runtime_archives=('win-x64.'$VER_RUNTIME'.zip' 'win-x86.'$VER_RUNTIME'.zip' 'osx-x64.'$VER_RUNTIME'.tar.gz' 'centos-x64.'$VER_RUNTIME'.tar.gz' 'debian-x64.'$VER_RUNTIME'.tar.gz' 'fedora.23-x64.'$VER_RUNTIME'.tar.gz' 'rhel-x64.'$VER_RUNTIME'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME'.tar.gz' 'ubuntu.16.10-x64.'$VER_RUNTIME'.tar.gz')
 
     for i in "${runtime_archives[@]}"
         do
         : 
-        printf "%s\n" $RUNTIME"-"$i" "$BLOB_ROOT_FX$VER_FX"/"$RUNTIME"-"$i" "$DLC$DLC_ROOT_FX"/"$RUNTIME"-"$i
+        printf "%s\n" $RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$RUNTIME"-"$i
     done
     printf "%s\n"
