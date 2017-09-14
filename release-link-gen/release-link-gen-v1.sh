@@ -24,9 +24,9 @@
 # Verify correct version of host and hostfxr are used for a given release
 
 # Versions
-VER_SDK="1.1.3"
-VER_RUNTIME_10="1.0.6"
-VER_RUNTIME_11="1.1.3"
+VER_SDK="1.1.4"
+VER_RUNTIME_10="1.0.7"
+VER_RUNTIME_11="1.1.4"
 VER_HOST="1.0.1"
 VER_HOSTFXR="1.0.1"
 

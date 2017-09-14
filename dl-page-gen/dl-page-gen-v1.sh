@@ -5,20 +5,20 @@
 # Run this script and redirect output to md file. eg ./dl-page-gen-v1 > 1.0.5-download.md
 
 # Versions
-VER_SDK="1.1.3"
-VER_RUNTIME="1.0.6"
+VER_SDK="1.1.4"
+VER_RUNTIME="1.1.4"
 
 # Locations
 # 1.0.6 - E/9/E/E9E929B2-6532-43D7-98D2-E0B4445912BD
-# 1.1.3 - 6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2
-# SDK 1.1.3 - F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F
+# 1.1.4 - 6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2
+# SDK 1.1.4 - F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F
 
 BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
 BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
 BLOB_ROOT_CHECKSUM="https://dotnetcli.blob.core.windows.net/dotnet/checksums/"
 DLC="https://download.microsoft.com/download/"
 DLC_ROOT_SDK="F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F"
-DLC_ROOT_RUNTIME="E/9/E/E9E929B2-6532-43D7-98D2-E0B4445912BD"
+DLC_ROOT_RUNTIME="6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2"
 
 printf "%s\n" "# .NET Core "$VER_RUNTIME
 printf "%s\n" 
