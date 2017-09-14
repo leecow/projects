@@ -1,0 +1,5 @@
+http://www.becsv.com/csv-json.php
+
+php csv-to-json.php csv-filename.csv > json-filename.json
+
+Script has issues with dates and renders "7/18/1964" as "7\/18\/1964"

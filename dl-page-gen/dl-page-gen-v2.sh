@@ -3,7 +3,6 @@
 
 # Update the Version and Location variables
 # Run this script and redirect output to md file. eg ./dl-page-gen-v2 > 2.0.1-download.md
-# Paste in sections marked with "*** PLACEHOLDER --- ***".
 
 # Versions
 VER_SDK="2.0.1"
@@ -61,8 +60,27 @@ printf "%s\n" "Register the Microsoft key, the product repository for your distr
 printf "%s\n" 
 printf "%s\n" "#### Ubuntu 17.04"
 printf "%s\n" 
-printf "%s\n" "*** __PLACEHOLDER --- PASTE DEB FEED REGISTRATION STEPS HERE__ ***"
+printf "%s\n" '```bash'
+printf "%s\n" 'curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg'
+printf "%s\n" 'sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg'
+printf "%s\n" 'sudo sh -c '\''echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-zesty-prod zesty main" > /etc/apt/sources.list.d/dotnetdev.list'\'
+printf "%s\n" '```'
 printf "%s\n" 
+printf "%s\n" "#### Ubuntu 16.04"
+printf "%s\n" 
+printf "%s\n" '```bash'
+printf "%s\n" 'curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg'
+printf "%s\n" 'sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg'
+printf "%s\n" 'sudo sh -c '\''echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list'\'
+printf "%s\n" '```'
+printf "%s\n" "#### Ubuntu 14.04"
+printf "%s\n" 
+printf "%s\n" '```bash'
+printf "%s\n" 'curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg'
+printf "%s\n" 'sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg'
+printf "%s\n" "sudo sh -c "\'"echo "'"'"deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main"'"'" > /etc/apt/sources.list.d/dotnetdev.list"\'
+printf "%s\n" '```'
+printf "%s\n"
 printf "%s\n" "Then, update the package cache and install .NET Core"
 printf "%s\n" 
 printf "%s\n" '```bash'
@@ -74,9 +92,12 @@ printf "%s\n" "### RHEL and Fedora based systems"
 printf "%s\n" 
 printf "%s\n" "Register the Microsoft key, the product repository for your distro and install required system dependencies with the following scripts."
 printf "%s\n" 
-printf "%s\n" "#### Fedora, CentOS, Oracle Linux"
+printf "%s\n" "#### Fedora, CentOS, Oracle Linux, SUSE"
 printf "%s\n" 
-printf "%s\n" "*** __PLACEHOLDER --- PASTE RPM FEED REGISTRATION STEPS HERE__ ***"
+printf "%s\n" '```bash'
+printf "%s\n" 'sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc'
+printf "%s\n" 'sudo sh -c '\''echo -e "[packages-microsoft-com-prod]\nname=packages-microsoft-com-prod\nbaseurl=https://packages.microsoft.com/yumrepos/microsoft-rhel7.3-prod\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/dotnetdev.repo'\'
+printf "%s\n" '```'
 printf "%s\n" 
 printf "%s\n" "Then, update the package cache and install .NET Core"
 printf "%s\n" 
@@ -98,7 +119,7 @@ printf "%s\n" '**Note:** When installing the SDK, SUSE and OpenSUSE may report t
 printf "%s\n" 
 printf "%s\n" "## Installation from a binary archive"
 printf "%s\n" 
-#printf "%s\n" "Installing from the packages detailed above is recommended and you can also install from binary archive. When using binary archives to install, the contents must be extracted to a user location such as `$HOME/dotnet` and a symbolic link created for `dotnet`. This is a change from previous versions of .NET Core. Additional details can be seen in [.NET Core 2.0 Known Issues](https://github.com/dotnet/core/blob/master/release-notes/2.0/2.0.0-known-issues.md)."
+printf "%s\n" 'Installing from the packages detailed above is recommended and you can also install from binary archive. When using binary archives to install, the contents must be extracted to a user location such as `$HOME/dotnet` and a symbolic link created for `dotnet`.'
 printf "%s\n" 
 printf "%s\n" '```bash'
 printf "%s\n" 'mkdir -p $HOME/dotnet && tar zxf dotnet.tar.gz -C $HOME/dotnet'
@@ -109,11 +130,11 @@ printf "%s\n" "## Windows Server Hosting"
 printf "%s\n" 
 printf "%s\n" "If you are looking to host stand-alone apps on Windows Servers, the ASP.NET Core Module for IIS can be installed separately on servers without installing .NET Core runtime. You can download the Windows (Server Hosting) installer and run the following command from an Administrator command prompt:"
 printf "%s\n" 
-printf "%s\n" "[DotNetCore.2.0.0-WindowsHosting.exe](https://download.microsoft.com/download/B/1/D/B1D7D5BF-3920-47AA-94BD-7A6E48822F18/DotNetCore.2.0.0-WindowsHosting.exe)"
+printf "%s\n" "[DotNetCore."$VER_RUNTIME"-WindowsHosting.exe]("$DLC$DLC_ROOT_RUNTIME"/DotNetCore."$VER_RUNTIME"-WindowsHosting.exe)"
 printf "%s\n" 
 printf "%s\n" "### ASP.NET Core Package Store"
 printf "%s\n" 
 printf "%s\n" "The Runtime Package Store is installed by the .NET Core SDK and the Windows Server Hosting installer. If you need to install the Runtime Package Store separately, the following can be used."
 printf "%s\n" 
-printf "%s\n" "* [AspNetCore.2.0.0.RuntimePackageStore_x64.exe](https://download.microsoft.com/download/B/1/D/B1D7D5BF-3920-47AA-94BD-7A6E48822F18/AspNetCore.2.0.0.RuntimePackageStore_x64.exe)"
-printf "%s\n" "* [AspNetCore.2.0.0.RuntimePackageStore_x86.exe](https://download.microsoft.com/download/B/1/D/B1D7D5BF-3920-47AA-94BD-7A6E48822F18/AspNetCore.2.0.0.RuntimePackageStore_x86.exe)"
+printf "%s\n" "* [AspNetCore."$VER_RUNTIME".RuntimePackageStore_x64.exe]("$DLC$DLC_ROOT_RUNTIME"/AspNetCore."$VER_RUNTIME".RuntimePackageStore_x64.exe)"
+printf "%s\n" "* [AspNetCore."$VER_RUNTIME".RuntimePackageStore_x86.exe]("$DLC$DLC_ROOT_RUNTIME"/AspNetCore."$VER_RUNTIME".RuntimePackageStore_x86.exe)"

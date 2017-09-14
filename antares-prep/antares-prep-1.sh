@@ -11,10 +11,11 @@
 
 
 # -----------------------------------------------------------------------# 
-VER_SDK="1.0.4"
-VER_FX="1.0.5"
-TMP_EXPLODE="tmp-explode-"$VER_FX
-TMP_ZIP="tmp-zip-"$VER_FX 
+VER_SDK="1.1.3"
+VER_FX_10="1.0.6"
+VER_FX_11="1.1.3"
+TMP_EXPLODE="tmp-explode-"$VER_FX_11
+TMP_ZIP="tmp-zip-"$VER_FX_11 
 BLOB_LOCATION="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"$VER_SDK"/"
 
 ANT_SUFFIX="-antares-win-x86.zip"
@@ -22,10 +23,11 @@ ANT_SUFFIX="-antares-win-x86.zip"
 # ----------- 1.x filenames ------------- #
 SOURCE_SDK="dotnet-dev-win-x86."$VER_SDK".zip"
 
-DOTNET="dotnet-host-"$VER_FX$ANT_SUFFIX
-HOSTFXR="dotnet-hostfxr-"$VER_FX$ANT_SUFFIX
+DOTNET="dotnet-host-"$VER_FX_11$ANT_SUFFIX
+HOSTFXR="dotnet-hostfxr-"$VER_FX_11$ANT_SUFFIX
 SDK="dotnet-sdk-"$VER_SDK$ANT_SUFFIX
-SHARED="dotnet-runtime-"$VER_FX$ANT_SUFFIX
+SHARED_10="dotnet-runtime-"$VER_FX_10$ANT_SUFFIX
+SHARED_11="dotnet-runtime-"$VER_FX_11$ANT_SUFFIX
 
 # Clean the working directories
 if [ -d $TMP_ZIP ]; then
@@ -47,8 +49,10 @@ printf "Creating: "$DOTNET"\n\n" > ../$TMP_ZIP/antares-prep.log
 zip  ../$TMP_ZIP/$DOTNET dotnet.exe >> ../$TMP_ZIP/antares-prep.log
 printf "\nCreating: "$HOSTFXR"\n\n" >> ../$TMP_ZIP/antares-prep.log
 zip -r ../$TMP_ZIP/$HOSTFXR host >> ../$TMP_ZIP/antares-prep.log
-printf "\nCreating: "$SHARED"\n\n" >> ../$TMP_ZIP/antares-prep.log
-zip -r ../$TMP_ZIP/$SHARED shared >> ../$TMP_ZIP/antares-prep.log
+printf "\nCreating: "$SHARED_10"\n\n" >> ../$TMP_ZIP/antares-prep.log
+zip -r ../$TMP_ZIP/$SHARED_10 shared/Microsoft.NETCore.App/$VER_FX_10 >> ../$TMP_ZIP/antares-prep.log
+printf "\nCreating: "$SHARED_11"\n\n" >> ../$TMP_ZIP/antares-prep.log
+zip -r ../$TMP_ZIP/$SHARED_11 shared/Microsoft.NETCore.App/$VER_FX_11 >> ../$TMP_ZIP/antares-prep.log
 printf "\nCreating: "$SDK"\n\n" >> ../$TMP_ZIP/antares-prep.log
 zip -r ../$TMP_ZIP/$SDK sdk >> ../$TMP_ZIP/antares-prep.log
 
