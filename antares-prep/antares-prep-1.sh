@@ -11,9 +11,9 @@
 
 
 # -----------------------------------------------------------------------# 
-VER_SDK="1.1.3"
-VER_FX_10="1.0.6"
-VER_FX_11="1.1.3"
+VER_SDK="1.1.4"
+VER_FX_10="1.0.7"
+VER_FX_11="1.1.4"
 TMP_EXPLODE="tmp-explode-"$VER_FX_11
 TMP_ZIP="tmp-zip-"$VER_FX_11 
 BLOB_LOCATION="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"$VER_SDK"/"
