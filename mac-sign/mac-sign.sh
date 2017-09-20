@@ -2,6 +2,7 @@
 # zip them up for signing submission
 # find out if there's an api to automate submission (Jacques mail from way back?)
 # drive pkgutil to bulk validate
+# see help section below for usage details
 
 TESTMODE="false"
 C_ALL="true"
