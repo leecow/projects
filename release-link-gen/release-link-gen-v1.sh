@@ -53,7 +53,7 @@ printf "%s\n\n" "Installers"
 
 # SDK Installers
 printf "%s\n\n" "SDK Installers"
-declare -a dev_installers=('osx-x64.'$VER_SDK'.pkg' 'win-x64.'$VER_SDK'.exe' 'win-x86.'$VER_SDK'.exe' 'ubuntu-x64.'$VER_SDK'.deb' 'ubuntu.16.04-x64.'$VER_SDK'.deb' 'ubuntu.16.10-x64.'$VER_SDK'.deb')
+declare -a dev_installers=('osx-x64.'$VER_SDK'.pkg' 'win-x64.'$VER_SDK'.exe' 'win-x86.'$VER_SDK'.exe')
     
     for i in "${dev_installers[@]}"
         do
@@ -145,7 +145,7 @@ printf "%s\n\n" "Binary Archives"
 
 # SDK Binary Archives
 printf "%s\n\n" "SDK Binary Archives"
-declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.23-x64.'$VER_SDK'.tar.gz' 'opensuse.42.1-x64.'$VER_SDK'.tar.gz' 'osx-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.10-x64.'$VER_SDK'.tar.gz' 'win-x64.'$VER_SDK'.zip' 'win-x86.'$VER_SDK'.zip')
+declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.24-x64.'$VER_SDK'.tar.gz' 'opensuse.42.1-x64.'$VER_SDK'.tar.gz' 'osx-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz' 'win-x64.'$VER_SDK'.zip' 'win-x86.'$VER_SDK'.zip')
 
     for i in "${sdk_archives[@]}"
         do
@@ -156,7 +156,7 @@ declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.t
 
 # 1.0 Runtime Binary Archives
 printf "%s\n\n" $VER_RUNTIME_10" Runtime Binary Archives"
-declare -a runtime_archives=('win-x64.'$VER_RUNTIME_10'.zip' 'win-x86.'$VER_RUNTIME_10'.zip' 'osx-x64.'$VER_RUNTIME_10'.tar.gz' 'centos-x64.'$VER_RUNTIME_10'.tar.gz' 'debian-x64.'$VER_RUNTIME_10'.tar.gz' 'fedora.23-x64.'$VER_RUNTIME_10'.tar.gz' 'rhel-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu.16.10-x64.'$VER_RUNTIME_10'.tar.gz')
+declare -a runtime_archives=('win-x64.'$VER_RUNTIME_10'.zip' 'win-x86.'$VER_RUNTIME_10'.zip' 'osx-x64.'$VER_RUNTIME_10'.tar.gz' 'centos-x64.'$VER_RUNTIME_10'.tar.gz' 'debian-x64.'$VER_RUNTIME_10'.tar.gz' 'rhel-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_10'.tar.gz')
 
     for i in "${runtime_archives[@]}"
         do
@@ -167,7 +167,7 @@ declare -a runtime_archives=('win-x64.'$VER_RUNTIME_10'.zip' 'win-x86.'$VER_RUNT
 
 # 1.1 Runtime Binary Archives
 printf "%s\n\n" $VER_RUNTIME_11" Runtime Binary Archives"
-declare -a runtime_archives=('win-x64.'$VER_RUNTIME_11'.zip' 'win-x86.'$VER_RUNTIME_11'.zip' 'osx-x64.'$VER_RUNTIME_11'.tar.gz' 'centos-x64.'$VER_RUNTIME_11'.tar.gz' 'debian-x64.'$VER_RUNTIME_11'.tar.gz' 'fedora.23-x64.'$VER_RUNTIME_11'.tar.gz' 'rhel-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.10-x64.'$VER_RUNTIME_11'.tar.gz')
+declare -a runtime_archives=('win-x64.'$VER_RUNTIME_11'.zip' 'win-x86.'$VER_RUNTIME_11'.zip' 'osx-x64.'$VER_RUNTIME_11'.tar.gz' 'centos-x64.'$VER_RUNTIME_11'.tar.gz' 'debian-x64.'$VER_RUNTIME_11'.tar.gz' 'fedora.24-x64.'$VER_RUNTIME_11'.tar.gz' 'rhel-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.tar.gz')
 
     for i in "${runtime_archives[@]}"
         do
