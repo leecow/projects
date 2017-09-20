@@ -141,7 +141,7 @@ function dl_runtime_installers()
                     SHARED_NAME=$RUNTIME
                 fi
         
-                tmp_dl=${SHARED_NAME}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_11}"/"${SHARED_NAME}"-"${i}
+                tmp_dl=${SHARED_NAME}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${SHARED_NAME}"-"${i}
                 if [ $TESTMODE = true ]
                     then
                         echo $tmp_dl
@@ -155,7 +155,7 @@ function dl_runtime_installers()
         then
             case "$C_PLATFORM" in
                 linux)
-                    declare -a ubuntu_shared=('ubuntu-x64.'$VER_RUNTIME_11'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.deb')
+                    declare -a runtime_installers=('ubuntu-x64.'$VER_RUNTIME_11'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.deb')
                 ;;
                 osx)
                 declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_11'.pkg')
@@ -310,9 +310,9 @@ function dl_sdk_installers()
         if [[ $i = *'deb'* ]]
         # account for sdk file name differences between Ubuntu and everyone else. 
         then
-            DEV_NAME=$DEV
-        else
             DEV_NAME=$SDK
+        else
+            DEV_NAME=$DEV
         fi
         tmp_dl=${DEV_NAME}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK}"/"${DEV_NAME}"-"${i}
         if [ $TESTMODE = true ]
