@@ -5,11 +5,11 @@
 # Run this script and redirect output to md file. eg ./dl-page-gen-v1 > 1.0.5-download.md
 
 # Versions
-VER_RUNTIME="1.0.7"
+VER_RUNTIME="1.1.4"
 VER_SDK="1.1.4"
 
 # Locations
-# 1.0.7 - E/9/E/E9E929B2-6532-43D7-98D2-E0B4445912BD
+# 1.0.7 - B/0/D/B0D6D983-3188-4008-A852-94BCED5355E6
 # 1.1.4 - 6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2
 # SDK 1.1.4 - F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F
 
@@ -78,7 +78,7 @@ printf "%s\n" "#### Update package cache and install .NET Core"
 printf "%s\n" 
 printf "%s\n" '```bash'
 printf "%s\n" 'sudo apt-get update'
-printf "%s\n" 'sudo apt-get install dotnet-sdk-'$VER_SDK
+printf "%s\n" 'sudo apt-get install dotnet-dev-'$VER_SDK
 printf "%s\n" '```'
 printf "%s\n" 
 printf "%s\n" "## Installation from a binary archive"
