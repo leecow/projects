@@ -146,6 +146,7 @@ function dl_runtime_installers()
                     then
                         echo $tmp_dl
                     else
+                        echo $tmp_dl
                         curl -o $tmp_dl
                 fi
             done
@@ -184,6 +185,7 @@ function dl_runtime_installers()
                     then
                         echo $tmp_dl
                     else
+                        echo $tmp_dl
                         curl -o $tmp_dl
                 fi
             done
@@ -223,6 +225,7 @@ function dl_host_installers()
                 then
                     echo $tmp_dl
                 else
+                    echo $tmp_dl
                     curl -o $tmp_dl
 
             fi
@@ -235,6 +238,7 @@ function dl_host_installers()
                 then
                     echo $tmp_dl
                 else
+                    echo $tmp_dl
                     curl -o $tmp_dl
             fi
         done
@@ -266,6 +270,7 @@ function dl_host_installers()
                     then
                         echo $tmp_dl
                     else
+                        echo $tmp_dl
                         curl -o $tmp_dl
                 fi
             done
@@ -277,6 +282,7 @@ function dl_host_installers()
                     then
                         echo $tmp_dl
                     else
+                        echo $tmp_dl
                         curl -o $tmp_dl
                 fi
             done
@@ -319,6 +325,7 @@ function dl_sdk_installers()
             then
                 echo $tmp_dl
             else
+                echo $tmp_dl
                 curl -o $tmp_dl
         fi
     done
@@ -331,6 +338,7 @@ function dl_sdk_installers()
             then
                 echo $tmp_dl
             else
+                echo $tmp_dl
                 curl -o $tmp_dl
         fi
     done
@@ -344,7 +352,7 @@ function dl_sdk_binaries()
     echo ""
     case "$C_PLATFORM" in
         linux)
-            declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.24-x64.'$VER_SDK'.tar.gz' 'opensuse.42.1-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz')
+            declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.24-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz')
             ;;
         osx)
             declare -a sdk_archives=('osx-x64.'$VER_SDK'.tar.gz')
@@ -353,7 +361,7 @@ function dl_sdk_binaries()
             declare -a sdk_archives=('win-x64.'$VER_SDK'.zip' 'win-x86.'$VER_SDK'.zip')
             ;;
         all)
-            declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.24-x64.'$VER_SDK'.tar.gz' 'opensuse.42.1-x64.'$VER_SDK'.tar.gz' 'osx-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz' 'win-x64.'$VER_SDK'.zip' 'win-x86.'$VER_SDK'.zip')
+            declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.24-x64.'$VER_SDK'.tar.gz' 'osx-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz' 'win-x64.'$VER_SDK'.zip' 'win-x86.'$VER_SDK'.zip')
             ;;
     esac
 
@@ -365,6 +373,7 @@ function dl_sdk_binaries()
                     then
                         echo $tmp_dl
                     else
+                        echo $tmp_dl
                         curl -o $tmp_dl
                 fi
         done
@@ -400,6 +409,7 @@ function dl_runtime_binaries(){
                     then
                         echo $tmp_dl
                     else
+                        echo $tmp_dl
                         curl -o $tmp_dl
                 fi
             done
@@ -430,6 +440,7 @@ function dl_runtime_binaries(){
                     then
                         echo $tmp_dl
                     else
+                        echo $tmp_dl
                         curl -o $tmp_dl
                 fi
             done

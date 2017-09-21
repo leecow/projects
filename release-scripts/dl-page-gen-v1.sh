@@ -5,11 +5,11 @@
 # Run this script and redirect output to md file. eg ./dl-page-gen-v1 > 1.0.5-download.md
 
 # Versions
+VER_RUNTIME="1.0.7"
 VER_SDK="1.1.4"
-VER_RUNTIME="1.1.4"
 
 # Locations
-# 1.0.6 - E/9/E/E9E929B2-6532-43D7-98D2-E0B4445912BD
+# 1.0.7 - E/9/E/E9E929B2-6532-43D7-98D2-E0B4445912BD
 # 1.1.4 - 6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2
 # SDK 1.1.4 - F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F
 
@@ -22,7 +22,7 @@ DLC_ROOT_RUNTIME="6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2"
 
 printf "%s\n" "# .NET Core "$VER_RUNTIME
 printf "%s\n" 
-printf "%s\n" ".NET Core "$VER_RUNTIME" comprises:"
+printf "%s\n" ".NET Core "$VER_RUNTIME" is comprised of:"
 printf "%s\n" 
 printf "%s\n" "* .NET Core Runtime "$VER_RUNTIME
 printf "%s\n" "* .NET Core SDK "$VER_SDK
@@ -94,4 +94,4 @@ printf "%s\n" "## Windows Server Hosting"
 printf "%s\n"
 printf "%s\n" 'If you are looking to host stand-alone apps on Windows Servers, the ASP.NET Core Module for IIS can be installed separately on servers without installing .NET Core runtime. You can download the Windows (Server Hosting) installer and run the following command from an Administrator command prompt:'
 printf "%s\n" 
-printf "%s\n" '[DotNetCore.1.0.6_1.1.3-WindowsHosting.exe]('$DLC$DLC_ROOT_RUNTIME'/DotNetCore.1.0.6_1.1.3-WindowsHosting.exe)'
+printf "%s\n" '[DotNetCore.1.0.7_1.1.4-WindowsHosting.exe]('$DLC$DLC_ROOT_RUNTIME'/DotNetCore.1.0.7_1.1.4-WindowsHosting.exe)'
