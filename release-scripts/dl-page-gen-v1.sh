@@ -1,24 +1,17 @@
 # Download page generator for .NET Core 1.x
 # Not compatible with .NET Core 2.x releases
 
-# Update the Version and Location variables
+# Update the Version mapping variable
 # Run this script and redirect output to md file. eg ./dl-page-gen-v1 > 1.0.5-download.md
 
+. ./release-versions.sh
+
 # Versions
-VER_RUNTIME="1.1.4"
-VER_SDK="1.1.4"
-
-# Locations
-# 1.0.7 - B/0/D/B0D6D983-3188-4008-A852-94BCED5355E6
-# 1.1.4 - 6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2
-# SDK 1.1.4 - F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F
-
-BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
-BLOB_ROOT_CHECKSUM="https://dotnetcli.blob.core.windows.net/dotnet/checksums/"
-DLC="https://download.microsoft.com/download/"
-DLC_ROOT_SDK="F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F"
-DLC_ROOT_RUNTIME="6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2"
+# need to toggle between 10 and 11 as needed for now.
+VER_RUNTIME=$VER_RUNTIME_11
+VER_SDK=$VER_SDK_11
+DLC_ROOT_RUNTIME=$DLC_ROOT_RUNTIME_11
+DLC_ROOT_SDK=$DLC_ROOT_SDK_11
 
 printf "%s\n" "# .NET Core "$VER_RUNTIME
 printf "%s\n" 

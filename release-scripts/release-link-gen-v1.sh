@@ -15,30 +15,13 @@
 # dotnet-osx-x64.1.0.5.pkg
 
 # Usage
-# Update the Versions and Locations values as appropriate
+# Update the Versions and Locations values as appropriate in release-versions.sh
 # run the script './release-link-gen-v1.sh'
 # copy or redirect the output as needed. 
 
 # NOTE: filespec used for generation only works with .NET Core 1.0+
 
-# Verify correct version of host and hostfxr are used for a given release
-
-# Versions
-VER_SDK="1.1.4"
-VER_RUNTIME_10="1.0.7"
-VER_RUNTIME_11="1.1.4"
-VER_HOST="1.0.1"
-VER_HOSTFXR="1.0.1"
-
-# Locations
-BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
-DLC="https://download.microsoft.com/download/"
-DLC_ROOT_SDK="F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F"
-DLC_ROOT_RUNTIME_10="E/9/E/E9E929B2-6532-43D7-98D2-E0B4445912BD"
-DLC_ROOT_RUNTIME_11="6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2"
-# 1.0.6 - E/9/E/E9E929B2-6532-43D7-98D2-E0B4445912BD
-
+. ./release-versions.sh
 
 # Names
 DEV="dotnet-dev"
@@ -53,21 +36,21 @@ printf "%s\n\n" "Installers"
 
 # SDK Installers
 printf "%s\n\n" "SDK Installers"
-declare -a dev_installers=('osx-x64.'$VER_SDK'.pkg' 'win-x64.'$VER_SDK'.exe' 'win-x86.'$VER_SDK'.exe')
+declare -a dev_installers=('osx-x64.'$VER_SDK_11'.pkg' 'win-x64.'$VER_SDK_11'.exe' 'win-x86.'$VER_SDK_11'.exe')
     
     for i in "${dev_installers[@]}"
         do
         :
-        printf "%s\n" $DEV"-"$i" "$BLOB_ROOT_SDK$VER_SDK"/"$DEV"-"$i" "$DLC$DLC_ROOT_SDK"/"$DEV"-"$i
+        printf "%s\n" $DEV"-"$i" "$BLOB_ROOT_SDK$VER_SDK_11"/"$DEV"-"$i" "$DLC$DLC_ROOT_SDK"/"$DEV"-"$i
     done
 
 # because Ubuntu had to be different ...
-declare -a sdk_installers=('ubuntu-x64.'$VER_SDK'.deb' 'ubuntu.16.04-x64.'$VER_SDK'.deb')
+declare -a sdk_installers=('ubuntu-x64.'$VER_SDK_11'.deb' 'ubuntu.16.04-x64.'$VER_SDK_11'.deb')
     
     for i in "${sdk_installers[@]}"
         do
         :
-        printf "%s\n" $SDK"-"$i" "$BLOB_ROOT_SDK$VER_SDK"/"$SDK"-"$i" "$DLC$DLC_ROOT_SDK"/"$SDK"-"$i
+        printf "%s\n" $SDK"-"$i" "$BLOB_ROOT_SDK$VER_SDK_11"/"$SDK"-"$i" "$DLC$DLC_ROOT_SDK"/"$SDK"-"$i
     done
 
     printf "%s\n" 
@@ -118,25 +101,47 @@ declare -a ubuntu_shared=('ubuntu-x64.'$VER_RUNTIME_11'.deb' 'ubuntu.16.04-x64.'
     done
     printf "%s\n"
 
-# Host
-printf "%s\n\n" "Host (dotnet.exe)"
-declare -a host_installers=('ubuntu-x64.'$VER_HOST'.deb' 'ubuntu.16.04-x64.'$VER_HOST'.deb' 'ubuntu.16.10-x64.'$VER_HOST'.deb')
+# 1.0 Host
+printf "%s\n\n" "1.0 Host (dotnet.exe)"
+declare -a host_installers=('ubuntu-x64.'$VER_HOST_10'.deb' 'ubuntu.16.04-x64.'$VER_HOST_10'.deb' 'ubuntu.16.10-x64.'$VER_HOST_10'.deb')
 
     for i in "${host_installers[@]}"
     do
         : 
-        printf "%s\n" $HOST"-"$i" "$BLOB_ROOT_RUNTIME$VER_HOST"/"$HOST"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOST"-"$i
+        printf "%s\n" $HOST"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME_10"/"$HOST"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOST"-"$i
     done
     printf "%s\n"
 
-# HostFXR
-printf "%s\n\n" "HostFXR"
-declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR'.deb' 'ubuntu.16.10-x64.'$VER_HOSTFXR'.deb')
+# 1.0 HostFXR
+printf "%s\n\n" "1.0 HostFXR"
+declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR_10'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR_10'.deb' 'ubuntu.16.10-x64.'$VER_HOSTFXR_10'.deb')
 
     for i in "${hostfxr_installers[@]}"
     do
         : 
-        printf "%s\n" $HOSTFXR"-"$i" "$BLOB_ROOT_RUNTIME$VER_HOSTFXR"/"$HOSTFXR"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOSTFXR"-"$i
+        printf "%s\n" $HOSTFXR"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME_10"/"$HOSTFXR"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOSTFXR"-"$i
+    done
+    printf "%s\n"
+
+# 1.1 Host
+printf "%s\n\n" "1.1 Host (dotnet.exe)"
+declare -a host_installers=('ubuntu-x64.'$VER_HOST_11'.deb' 'ubuntu.16.04-x64.'$VER_HOST_11'.deb' 'ubuntu.16.10-x64.'$VER_HOST_11'.deb')
+
+    for i in "${host_installers[@]}"
+    do
+        : 
+        printf "%s\n" $HOST"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME_11"/"$HOST"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOST"-"$i
+    done
+    printf "%s\n"
+
+# 1.1 HostFXR
+printf "%s\n\n" "1.1 HostFXR"
+declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR_11'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR_11'.deb' 'ubuntu.16.10-x64.'$VER_HOSTFXR_11'.deb')
+
+    for i in "${hostfxr_installers[@]}"
+    do
+        : 
+        printf "%s\n" $HOSTFXR"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME_11"/"$HOSTFXR"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOSTFXR"-"$i
     done
     printf "%s\n"
 
@@ -145,12 +150,12 @@ printf "%s\n\n" "Binary Archives"
 
 # SDK Binary Archives
 printf "%s\n\n" "SDK Binary Archives"
-declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.24-x64.'$VER_SDK'.tar.gz' 'opensuse.42.1-x64.'$VER_SDK'.tar.gz' 'osx-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz' 'win-x64.'$VER_SDK'.zip' 'win-x86.'$VER_SDK'.zip')
+declare -a sdk_archives=('centos-x64.'$VER_SDK_11'.tar.gz' 'debian-x64.'$VER_SDK_11'.tar.gz' 'fedora.24-x64.'$VER_SDK_11'.tar.gz' 'opensuse.42.1-x64.'$VER_SDK_11'.tar.gz' 'osx-x64.'$VER_SDK_11'.tar.gz' 'rhel-x64.'$VER_SDK_11'.tar.gz' 'ubuntu-x64.'$VER_SDK_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK_11'.tar.gz' 'win-x64.'$VER_SDK_11'.zip' 'win-x86.'$VER_SDK_11'.zip')
 
     for i in "${sdk_archives[@]}"
         do
         : 
-        printf "%s\n" $DEV"-"$i" "$BLOB_ROOT_SDK$VER_SDK"/"$DEV"-"$i" "$DLC$DLC_ROOT_SDK"/"$DEV"-"$i
+        printf "%s\n" $DEV"-"$i" "$BLOB_ROOT_SDK$VER_SDK_11"/"$DEV"-"$i" "$DLC$DLC_ROOT_SDK"/"$DEV"-"$i
     done
     printf "%s\n"
 

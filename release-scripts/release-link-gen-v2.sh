@@ -10,25 +10,13 @@
 # dotnet-sdk-2.0.0-osx-x64
 
 # Usage
-# Update the Versions and Locations values as appropriate
+# Update the Versions and Locations values in release-versions.sh
 # run the script './release-link-gen-v2.sh'
 # copy or redirect the output as needed. 
 
 # NOTE: filespec used for generation only works with .NET Core 2.0+
 
-clear
 . ./release-versions.sh
-
-# Versions
-# VER_SDK="2.0.1"
-# VER_RUNTIME="2.0.1"
-# 
-# # Locations
-# BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-# BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
-# DLC="https://download.microsoft.com/download/"
-# DLC_ROOT_SDK="7/3/A/73A3E4DC-F019-47D1-9951-0453676E059B"
-# DLC_ROOT_RUNTIME="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
 
 # Names
 SDK="dotnet-sdk"
