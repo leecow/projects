@@ -1,64 +1,119 @@
+#!/usr/bin/env bash
 # See help entry below for flags and usage example.
-# update the variables in the 'Versions' section below to target the desired release. 
+# Update the Version and location data in release-versions.sh to target the desired release. 
 
 clear
 
-### Versions ###
-VER_SDK="1.1.4"
-VER_RUNTIME_10="1.0.7"
-VER_RUNTIME_11="1.1.4"
-VER_HOST="1.0.1"
-VER_HOST_11="1.1.0"
-VER_HOSTFXR="1.0.1"
-VER_HOSTFXR_11="1.1.0"
-
-DLC_ROOT_SDK="F/4/F/F4FCB6EC-5F05-4DF8-822C-FF013DF1B17F"
-DLC_ROOT_RUNTIME_10="E/9/E/E9E929B2-6532-43D7-98D2-E0B4445912BD"
-DLC_ROOT_RUNTIME_11="6/F/B/6FB4F9D2-699B-4A40-A674-B7FF41E0E4D2"
-
-# Locations, generall fixed and do not need to be updated. 
-BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
-DLC="https://download.microsoft.com/download/"
+. ./release-versions.sh
 
 #### File name stubs for each component ####
 DEV="dotnet-dev"
 SDK="dotnet-sdk"
-RUNTIME="dotnet"
+RUNTIME_10="dotnet"
+RUNTIME_20="dotnet-runtime"
 SHARED="dotnet-sharedframework"
 HOST="dotnet-host"
 HOSTFXR="dotnet-hostfxr"
 ####################################################
 
 #### Initialize and process command line options ####
-C_RUNTIME='false'
-C_SDK='false'
-C_INSTALLER='false'
-C_BINARY='false'
-C_ALL='true'
+C_RUNTIME='true'
+C_SDK='true'
+C_INSTALLER='true'
+C_BINARY='true'
+C_ALL='false'
 C_PLATFORM='all'
 C_VERSION='00'
-TESTMODE="false"
+TESTMODE='false'
+
+function print_settings()
+{
+    echo ""
+    echo " --------------------------------------------------------"
+    echo "|                     Tool parameters                    |"
+    echo " --------------------------------------------------------"
+    echo " C_RUNTIME: "   $C_RUNTIME
+    echo " C_SDK: "       $C_SDK
+    echo " C_INSTALLER: " $C_INSTALLER
+    echo " C_BINARY: "    $C_BINARY
+    echo " C_ALL: "       $C_ALL
+    echo " C_PLATFORM: "  $C_PLATFORM
+    echo " C_VERSION: "   $C_VERSION
+    echo " C_TESTMODE: "  $TESTMODE
+}
+
+function print_help()
+{
+    echo ""
+    echo " --------------------------------------------------------"
+    echo "|             Download tool for .NET Core                |"
+    echo " --------------------------------------------------------"
+    echo "Flags:"
+    echo "  -a | --all ........ All packages, all platforms, version 1.0 and 1.1. Providing any other flag will override."
+    echo "  -b | --binary ..... Binary packages"
+    echo "  -i | --installer .. Installer packages"
+    echo "  -p | --platform ... Platform [linux, osx, win, all]"
+    echo "  -r | --runtime .... Runtime"
+    echo "  -s | --sdk ........ SDK"
+    echo "  -t | --test ....... Test mode: text output only and no downloads initiated."
+    echo "  -v | --version .... Version base to be downloaded [10, 11, 20]"
+    echo " "
+    echo "Usage examples:"
+    echo "  ./dotnet-dl.sh -r -i -v 10 .......... All 1.0 runtime installers"
+    echo "  ./dotnet-dl.sh -v 20 ................ All 2.0 installers and binary packages"
+    echo "  ./dotnet-dl.sh -p osx -i -v 20 ...... 2.0 osx installers"
+    echo "  ./dotnet-dl.sh -s -p win -i -v 11 ... 1.1 win sdk installers"
+    echo "  ./dotnet-dl.sh -r -b linux -v 20 .... Linux runtime binary packages"
+    echo ""
+}
+
+function print_env()
+{
+    echo " --------------------------------------"
+    echo "| Variables set by release-versions.sh |"
+    echo " --------------------------------------"
+    ### Versions ###
+    echo
+    echo "-- Versions: Runtime --"
+    echo "1.0 Host:     " $VER_HOST_10
+    echo "1.0 Host FXR: " $VER_HOSTFXR_10
+    echo "1.0 Runtime:  " $VER_RUNTIME_10
+    echo "1.1 Host:     " $VER_HOST_11
+    echo "1.1 Host FXR: " $VER_HOSTFXR_11
+    echo "1.1 Runtime:  " $VER_RUNTIME_11
+    echo "2.0 Runtime:  " $VER_RUNTIME_20
+    echo "-- Versions: SDK --"
+    echo "1.0 SDK:      " $VER_SDK_10
+    echo "1.1 SDK:      " $VER_SDK_11
+    echo "2.0 SDK:      " $VER_SDK_20
+    # Locations
+    echo
+    echo "-- Containers and urls --"
+    echo "DLC Runtime 1.0: " $DLC_ROOT_RUNTIME_10
+    echo "DLC SDK 1.0: " $DLC_ROOT_SDK_10
+    echo "DLC SDK 1.1: " $DLC_ROOT_SDK_11
+    echo "DLC Runtime 1.1: " $DLC_ROOT_RUNTIME_11
+    echo "DLC SDK 2.0: " $DLC_ROOT_SDK_20
+    echo "Blob SDK: " $BLOB_ROOT_SDK
+    echo "Blob Runtime: " $BLOB_ROOT_RUNTIME
+    echo "DLC URL: " $DLC
+}
+
+# input parameter testing
+
+if [ $# -eq 0 ] 
+then
+    echo "No parameters. Printing env and help ..."
+    TESTMODE='true'
+    print_help
+    print_env
+    exit 0
+fi
 
 while test $# -gt 0; do
     case "$1" in
         -h|help)
-            echo ""
-            echo "Flags:"
-            echo "  -a | --all ........ Default: All packages, all platforms, version 1.0 and 1.1. Providing any other flag will override."
-            echo "  -b | --binary ..... binary packages"
-            echo "  -i | --installer .. installer packages"
-            echo "  -p | --platform ... platform [osx, linux, win]"
-            echo "  -r | --runtime .... Runtime"
-            echo "  -s | --SDK ........ SDK"
-            echo "  -t | --test ....... Test mode: text output only and no downloads initiated."
-            echo "  -v | --version .... Version base to be downloaded [10, 11]"
-            echo " "
-            echo "Usage examples:"
-            echo "  ./dotnet-dl.sh -r -i -v 10 ..... All v10 Runtime installers"
-            echo "  ./dotnet-dl.sh -p osx -i ....... All osx installers"
-            echo "  ./dotnet-dl.sh -p win -i -v11 .. V11 win installers"
-            echo "  ./dotnet-dl.sh -p linux ........ All Linux installers and binary packages"
+            print_help
             exit 0
             ;;
         -a|--all)
@@ -68,31 +123,45 @@ while test $# -gt 0; do
         -b|--binary)
             C_BINARY='true'
             C_ALL='false'
+            C_INSTALLER='false'
             shift
             ;;
         -i|--installer)
             C_INSTALLER='true'
+            C_BINARY='false'
             C_ALL='false'
             shift
             ;;
         -p|--platform)
             shift
             C_PLATFORM=$1
-            # need a check here for valid platform values. osx, win, linux for now.
-            shift
+            C_ALL='false'
+            # is osx, linux, win?
+            if [ $C_PLATFORM = 'linux' ] || [ $C_PLATFORM = 'osx' ] || [ $C_PLATFORM = 'win' ] || [ $C_PLATFORM = 'all' ]
+            then
+                shift
+            else
+                echo '"'$C_PLATFORM'"' "platform unknown. Please use linux, osx, win or all."
+                print_help
+                exit 0
+            fi
             ;;
         -r|--runtime)
             C_RUNTIME='true'
+            C_SDK='false'
             C_ALL='false'
             shift
             ;;
         -s|--sdk)
             C_SDK='true'
+            C_RUNTIME='false'
             C_ALL='false'
             shift
             ;;
         -t|--test)
             TESTMODE='true'
+            print_settings
+            print_env
             shift
             ;;
         -v|--version)
@@ -107,41 +176,101 @@ while test $# -gt 0; do
     esac
 done
 
+if [ $C_VERSION = "00" ]
+then
+    clear
+    echo "Please provide a version number."
+    print_help
+    exit 0
+fi
+
 function dl_runtime_installers()
 {
     echo ""
     echo "Downloading Runtime Installers"
     echo ""
-
-    if [ $C_VERSION = "10" ] || [ $C_VERSION = "00" ]
-        then
             case "$C_PLATFORM" in
                 linux)
-                    declare -a runtime_installers=('ubuntu-x64.'$VER_RUNTIME_10'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_10'.deb')
+                    if [ $C_VERSION = "10" ]
+                    then
+                        declare -a runtime_installers=('ubuntu-x64.'$VER_RUNTIME_10'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_10'.deb')
+                    fi
+                    if [ $C_VERSION = "11" ]
+                    then
+                        declare -a runtime_installers=('ubuntu-x64.'$VER_RUNTIME_11'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.deb')
+                    fi
+                    if [ $C_VERSION = "20" ]
+                    then
+                        declare -a runtime_installers=('debian-x64.deb' 'rhel-x64.rpm' 'ubuntu-x64.deb' 'ubuntu.16.04-x64.deb')
+                    fi
                 ;;
                 osx)
-                    declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_10'.pkg')
+                    if [ $C_VERSION = "10" ]
+                    then
+                        declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_10'.pkg')
+                    fi
+                    if [ $C_VERSION = "11" ]
+                    then
+                        declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_11'.pkg')
+                    fi
+                    if [ $C_VERSION = "20" ]
+                    then
+                        declare -a runtime_installers=('osx-x64.pkg')
+                    fi
                 ;;
                 win)
-                    declare -a runtime_installers=('win-x64.'$VER_RUNTIME_10'.exe' 'win-x86.'$VER_RUNTIME_10'.exe')
+                    if [ $C_VERSION = "10" ]
+                    then
+                        declare -a runtime_installers=('win-x64.'$VER_RUNTIME_10'.exe' 'win-x86.'$VER_RUNTIME_10'.exe')
+                    fi
+                    if [ $C_VERSION = "11" ]
+                    then
+                        declare -a runtime_installers=('win-x64.'$VER_RUNTIME_11'.exe' 'win-x86.'$VER_RUNTIME_11'.exe')
+                    fi
+                    if [ $C_VERSION = "20" ]
+                    then
+                        declare -a runtime_installers=('win-x64.exe' 'win-x86.exe')
+                    fi
                 ;;
                 all)
-                    declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_10'.pkg' 'ubuntu-x64.'$VER_RUNTIME_10'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_10'.deb' 'win-x64.'$VER_RUNTIME_10'.exe' 'win-x86.'$VER_RUNTIME_10'.exe')
+                    if [ $C_VERSION = "10" ]
+                    then
+                        declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_10'.pkg' 'ubuntu-x64.'$VER_RUNTIME_10'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_10'.deb' 'win-x64.'$VER_RUNTIME_10'.exe' 'win-x86.'$VER_RUNTIME_10'.exe')
+                    fi
+                    if [ $C_VERSION = "11" ]
+                    then
+                        declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_11'.pkg' 'ubuntu-x64.'$VER_RUNTIME_11'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.deb' 'win-x64.'$VER_RUNTIME_11'.exe' 'win-x86.'$VER_RUNTIME_11'.exe')
+                    fi
+                    if [ $C_VERSION = "20" ]
+                    then
+                        declare -a runtime_installers=('osx-x64.pkg' 'win-x64.exe' 'win-x86.exe' 'debian-x64.deb' 'rhel-x64.rpm' 'ubuntu-x64.deb' 'ubuntu.16.04-x64.deb')
+                    fi
                 ;;
             esac
 
             for i in "${runtime_installers[@]}"
                 do
                 :
-                if [[ $i = *'deb'* ]]
+                if [[ $i = *'deb'* ]] && [[ $C_VERSION != 20 ]]
                 # account for linux file name differences between Ubuntu and everyone else. 
                 then
                     SHARED_NAME=$SHARED
                 else
-                    SHARED_NAME=$RUNTIME
+                    SHARED_NAME=$RUNTIME_10
                 fi
-        
-                tmp_dl=${SHARED_NAME}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${SHARED_NAME}"-"${i}
+                # build tmp_dl according to version filespec
+                case "$C_VERSION" in
+                    10)
+                        tmp_dl=${SHARED_NAME}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${SHARED_NAME}"-"${i}
+                    ;;
+                    11)
+                        tmp_dl=${SHARED_NAME}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_11}"/"${SHARED_NAME}"-"${i}
+                    ;;
+                    20)                        
+                        tmp_dl=${RUNTIME_20}"-"${VER_RUNTIME_20}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_20}"/"${RUNTIME_20}"-"${VER_RUNTIME_20}"-"${i}
+                    ;;
+                esac
+
                 if [ $TESTMODE = true ]
                     then
                         echo $tmp_dl
@@ -150,46 +279,6 @@ function dl_runtime_installers()
                         curl -o $tmp_dl
                 fi
             done
-    fi
-
-    if [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
-        then
-            case "$C_PLATFORM" in
-                linux)
-                    declare -a runtime_installers=('ubuntu-x64.'$VER_RUNTIME_11'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.deb')
-                ;;
-                osx)
-                declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_11'.pkg')
-                ;;
-                win)
-                    declare -a runtime_installers=('win-x64.'$VER_RUNTIME_11'.exe' 'win-x86.'$VER_RUNTIME_11'.exe')
-                ;;
-                all)
-                    declare -a runtime_installers=('osx-x64.'$VER_RUNTIME_11'.pkg' 'ubuntu-x64.'$VER_RUNTIME_11'.deb' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.deb' 'win-x64.'$VER_RUNTIME_11'.exe' 'win-x86.'$VER_RUNTIME_11'.exe')
-                ;;
-            esac
-
-            for i in "${runtime_installers[@]}"
-                do
-                :
-                if [[ $i = *'deb'* ]]
-                # account for linux file name differences between Ubuntu and everyone else. 
-                then
-                    SHARED_NAME=$SHARED
-                else
-                    SHARED_NAME=$RUNTIME
-                fi
-        
-                tmp_dl=${SHARED_NAME}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_11}"/"${SHARED_NAME}"-"${i}
-                if [ $TESTMODE = true ]
-                    then
-                        echo $tmp_dl
-                    else
-                        echo $tmp_dl
-                        curl -o $tmp_dl
-                fi
-            done
-    fi
 }
 
 function dl_host_installers()
@@ -197,13 +286,23 @@ function dl_host_installers()
     echo ""
     echo "Downloading Host and HostFXR Installers"
     echo ""
-
-    if [ $C_VERSION = "10" ] || [ $C_VERSION = "00" ]
-    then
         case "$C_PLATFORM" in
             linux)
-                declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR'.deb')
-                declare -a host_installers=('ubuntu-x64.'$VER_HOST'.deb' 'ubuntu.16.04-x64.'$VER_HOST'.deb')
+                if [ $C_VERSION = "10" ]
+                then
+                    declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR_10'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR_10'.deb')
+                    declare -a host_installers=('ubuntu-x64.'$VER_HOST_10'.deb' 'ubuntu.16.04-x64.'$VER_HOST_10'.deb')
+                fi
+                if [ $C_VERSION = "11" ]
+                then
+                    declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR_11'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR_11'.deb')
+                    declare -a host_installers=('ubuntu-x64.'$VER_HOST_11'.deb' 'ubuntu.16.04-x64.'$VER_HOST_11'.deb')
+                fi
+                if [ $C_VERSION = "20" ]
+                then
+                    declare -a hostfxr_installers=('debian-x64.deb' 'rhel-x64.rpm' 'ubuntu-x64.deb' 'ubuntu.16.04-x64.deb')
+                    declare -a hostfxr_installers=('debian-x64.deb' 'rhel-x64.rpm' 'ubuntu-x64.deb' 'ubuntu.16.04-x64.deb')
+                fi
             ;;
             osx)
                 echo "No separate host and hostfxr installers for osx."
@@ -212,28 +311,63 @@ function dl_host_installers()
                 echo "No separate host and hostfxr installers for win."
             ;;
             all)
-                declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR'.deb')
-                declare -a host_installers=('ubuntu-x64.'$VER_HOST'.deb' 'ubuntu.16.04-x64.'$VER_HOST'.deb')
+                if [ $C_VERSION = "10" ] || [ $C_VERSION = "00" ]
+                then
+                    declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR_10'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR_10'.deb')
+                    declare -a host_installers=('ubuntu-x64.'$VER_HOST_10'.deb' 'ubuntu.16.04-x64.'$VER_HOST_10'.deb')
+                fi
+                if [ $C_VERSION = "11" ]
+                then
+                    declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR_11'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR_11'.deb')
+                    declare -a host_installers=('ubuntu-x64.'$VER_HOST_11'.deb' 'ubuntu.16.04-x64.'$VER_HOST_11'.deb')
+                fi
+                if [ $C_VERSION = "20" ]
+                then
+                    declare -a hostfxr_installers=('debian-x64.deb' 'rhel-x64.rpm' 'ubuntu-x64.deb' 'ubuntu.16.04-x64.deb')
+                    declare -a host_installers=('debian-x64.deb' 'rhel-x64.rpm' 'ubuntu-x64.deb' 'ubuntu.16.04-x64.deb')
+                fi
             ;;
         esac
         
         for i in "${hostfxr_installers[@]}"
         do
             : 
-            tmp_dl=${HOSTFXR}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${HOSTFXR}"-"${i}
+            case "$C_VERSION" in
+            10)
+                tmp_dl=${HOSTFXR}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${HOSTFXR}"-"${i}
+            ;;
+            11)
+                tmp_dl=${HOSTFXR}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_11}"/"${HOSTFXR}"-"${i}
+            ;;
+            20)
+                tmp_dl=${HOSTFXR}"-"${VER_RUNTIME_20}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_20}"/"${HOSTFXR}"-"${VER_RUNTIME_20}"-"${i}
+            ;;
+            esac
+
             if [ $TESTMODE = true ]
                 then
                     echo $tmp_dl
                 else
                     echo $tmp_dl
                     curl -o $tmp_dl
-
             fi
         done
+
         for i in "${host_installers[@]}"
         do
             : 
-            tmp_dl=${HOST}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${HOST}"-"${i}
+            case "$C_VERSION" in
+            10)
+                tmp_dl=${HOST}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${HOST}"-"${i}
+            ;;
+            11)
+                tmp_dl=${HOST}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_11}"/"${HOST}"-"${i}
+            ;;
+            20)
+                tmp_dl=${HOST}"-"${VER_RUNTIME_20}"-"${i}" "${BLOB_ROOT_RUNTIME}${HOST}"-"${VER_RUNTIME_20}"-"${i}
+            ;;
+            esac
+
             if [ $TESTMODE = true ]
                 then
                     echo $tmp_dl
@@ -242,85 +376,79 @@ function dl_host_installers()
                     curl -o $tmp_dl
             fi
         done
-    fi
-
-    if [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
-        then
-            case "$C_PLATFORM" in
-                linux)
-                    declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR_11'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR_11'.deb')
-                    declare -a host_installers=('ubuntu-x64.'$VER_HOST_11'.deb' 'ubuntu.16.04-x64.'$VER_HOST_11'.deb')
-                ;;
-                osx)
-                    echo "No separate host and hostfxr installers for osx."
-                ;;
-                win)
-                    echo "No separate host and hostfxr installers for win."
-                ;;
-                all)
-                    declare -a hostfxr_installers=('ubuntu-x64.'$VER_HOSTFXR_11'.deb' 'ubuntu.16.04-x64.'$VER_HOSTFXR_11'.deb')
-                    declare -a host_installers=('ubuntu-x64.'$VER_HOST_11'.deb' 'ubuntu.16.04-x64.'$VER_HOST_11'.deb')
-                ;;
-            esac
-        for i in "${hostfxr_installers[@]}"
-            do
-                : 
-                tmp_dl=${HOSTFXR}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_11}"/"${HOSTFXR}"-"${i}
-                if [ $TESTMODE = true ]
-                    then
-                        echo $tmp_dl
-                    else
-                        echo $tmp_dl
-                        curl -o $tmp_dl
-                fi
-            done
-        for i in "${host_installers[@]}"
-            do
-                : 
-                tmp_dl=${HOST}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_11}"/"${HOST}"-"${i}
-                if [ $TESTMODE = true ]
-                    then
-                        echo $tmp_dl
-                    else
-                        echo $tmp_dl
-                        curl -o $tmp_dl
-                fi
-            done
-    fi
 }
 
 function dl_sdk_installers()
 {
     echo ""
-    echo "Downloading SDK Installers"
+    echo "Downloading SDK installers ..."
     echo ""
 
     case "$C_PLATFORM" in
         linux)
-            declare -a dev_installers=('ubuntu-x64.'$VER_SDK'.deb' 'ubuntu.16.04-x64.'$VER_SDK'.deb')
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                declare -a dev_installers=('ubuntu-x64.'$VER_SDK_11'.deb' 'ubuntu.16.04-x64.'$VER_SDK_11'.deb')
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                declare -a dev_installers=('debian-x64.deb' 'rhel-x64.rpm' 'ubuntu-x64.deb' 'ubuntu.16.04-x64.deb')
+
+            fi
             ;;
         osx)
-            declare -a dev_installers=('osx-x64.'$VER_SDK'.pkg')
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                declare -a dev_installers=('osx-x64.'$VER_SDK_11'.pkg')
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                declare -a dev_installers=('osx-x64.pkg')
+
+            fi
             ;;
         win)
-            declare -a dev_installers=('win-x64.'$VER_SDK'.exe' 'win-x86.'$VER_SDK'.exe')
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                declare -a dev_installers=('win-x64.'$VER_SDK_11'.exe' 'win-x86.'$VER_SDK_11'.exe')
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                declare -a dev_installers=('win-x86.exe' 'win-x64.exe')
+
+            fi
             ;;
         all)
-            declare -a dev_installers=('osx-x64.'$VER_SDK'.pkg' 'win-x64.'$VER_SDK'.exe' 'win-x86.'$VER_SDK'.exe' 'ubuntu-x64.'$VER_SDK'.deb' 'ubuntu.16.04-x64.'$VER_SDK'.deb')
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                declare -a dev_installers=('osx-x64.'$VER_SDK_11'.pkg' 'win-x64.'$VER_SDK_11'.exe' 'win-x86.'$VER_SDK_11'.exe' 'ubuntu-x64.'$VER_SDK_11'.deb' 'ubuntu.16.04-x64.'$VER_SDK_11'.deb')
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                declare -a dev_installers=('debian-x64.deb' 'osx-x64.pkg' 'rhel-x64.rpm' 'ubuntu-x64.deb' 'ubuntu.16.04-x64.deb' 'win-x86.exe' 'win-x64.exe')
+
+            fi
             ;;
     esac
             
     for i in "${dev_installers[@]}"
         do
         :
-        if [[ $i = *'deb'* ]]
-        # account for sdk file name differences between Ubuntu and everyone else. 
+        if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
         then
-            DEV_NAME=$SDK
-        else
-            DEV_NAME=$DEV
+            if [[ $i = *'deb'* ]]
+            # account for sdk file name differences between Ubuntu and everyone else. 
+            then
+                DEV_NAME=$SDK
+            else
+                DEV_NAME=$DEV
+            fi
+            tmp_dl=${DEV_NAME}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK_11}"/"${DEV_NAME}"-"${i}
         fi
-        tmp_dl=${DEV_NAME}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK}"/"${DEV_NAME}"-"${i}
+        if [ $C_VERSION = "20" ]
+        then
+            tmp_dl=${SDK}"-"${VER_SDK_20}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK_20}"/"${SDK}"-"${VER_SDK_20}"-"${i}
+        fi
         if [ $TESTMODE = true ]
             then
                 echo $tmp_dl
@@ -333,7 +461,7 @@ function dl_sdk_installers()
     for i in "${sdk_installers[@]}"
         do
         :
-        tmp_dl=${SDK}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK}"/"${SDK}"-"${i}
+        tmp_dl=${SDK}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK_11}"/"${SDK}"-"${i}
         if [ $TESTMODE = true ]
             then
                 echo $tmp_dl
@@ -348,34 +476,69 @@ function dl_sdk_installers()
 function dl_sdk_binaries()
 {
     echo ""
-    echo "downloading sdk binaries"
+    echo "Downloading SDK binaries ... v"$C_VERSION
     echo ""
     case "$C_PLATFORM" in
         linux)
-            declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.24-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz')
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                declare -a sdk_archives=('centos-x64.'$VER_SDK_11'.tar.gz' 'debian-x64.'$VER_SDK_11'.tar.gz' 'fedora.24-x64.'$VER_SDK_11'.tar.gz' 'rhel-x64.'$VER_SDK_11'.tar.gz' 'ubuntu-x64.'$VER_SDK_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK_11'.tar.gz')
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                declare -a sdk_archives=('linux-x64.tar.gz')
+            fi
             ;;
         osx)
-            declare -a sdk_archives=('osx-x64.'$VER_SDK'.tar.gz')
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                declare -a sdk_archives=('osx-x64.'$VER_SDK_11'.tar.gz')
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                declare -a sdk_archives=('osx-x64.tar.gz')
+            fi
             ;;
         win)
-            declare -a sdk_archives=('win-x64.'$VER_SDK'.zip' 'win-x86.'$VER_SDK'.zip')
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                declare -a sdk_archives=('win-x64.'$VER_SDK_11'.zip' 'win-x86.'$VER_SDK_11'.zip')
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                declare -a sdk_archives=('win-x64.zip' 'win-x86.zip')
+            fi
             ;;
         all)
-            declare -a sdk_archives=('centos-x64.'$VER_SDK'.tar.gz' 'debian-x64.'$VER_SDK'.tar.gz' 'fedora.24-x64.'$VER_SDK'.tar.gz' 'osx-x64.'$VER_SDK'.tar.gz' 'rhel-x64.'$VER_SDK'.tar.gz' 'ubuntu-x64.'$VER_SDK'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK'.tar.gz' 'win-x64.'$VER_SDK'.zip' 'win-x86.'$VER_SDK'.zip')
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                declare -a sdk_archives=('centos-x64.'$VER_SDK_11'.tar.gz' 'debian-x64.'$VER_SDK_11'.tar.gz' 'fedora.24-x64.'$VER_SDK_11'.tar.gz' 'osx-x64.'$VER_SDK_11'.tar.gz' 'rhel-x64.'$VER_SDK_11'.tar.gz' 'ubuntu-x64.'$VER_SDK_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_SDK_11'.tar.gz' 'win-x64.'$VER_SDK_11'.zip' 'win-x86.'$VER_SDK_11'.zip')
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                declare -a sdk_archives=('linux-x64.tar.gz' 'osx-x64.tar.gz' 'win-x64.zip' 'win-x86.zip')
+            fi
             ;;
     esac
 
         for i in "${sdk_archives[@]}"
             do
             : 
-            tmp_dl=${DEV}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK}"/"${DEV}"-"${i}
-                if [ $TESTMODE = true ]
-                    then
-                        echo $tmp_dl
-                    else
-                        echo $tmp_dl
-                        curl -o $tmp_dl
-                fi
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                tmp_dl=${DEV}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK_11}"/"${DEV}"-"${i}
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                tmp_dl=${SDK}"-"${VER_SDK_20}"-"${i}" "${BLOB_ROOT_SDK}${VER_SDK_20}"/"${SDK}"-"${VER_SDK_20}"-"${i}
+            fi
+            if [ $TESTMODE = true ]
+                then
+                    echo $tmp_dl
+                else
+                    echo $tmp_dl
+                    curl -o $tmp_dl
+            fi
         done
 }
 
@@ -383,68 +546,85 @@ function dl_runtime_binaries(){
     echo ""
     echo "Downloading Runtime Binaries"
     echo ""
-    if [ $C_VERSION = "10" ] || [ $C_VERSION = "00" ]
-        then
-            case "$C_PLATFORM" in
-                linux)
+        case "$C_PLATFORM" in
+            linux)
+                if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ]
+                then
                     declare -a runtime_archives=('centos-x64.'$VER_RUNTIME_10'.tar.gz' 'debian-x64.'$VER_RUNTIME_10'.tar.gz' 'rhel-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_10'.tar.gz')
-                ;;
-                osx)
+                fi
+                if [ $C_VERSION = "11" ]
+                then
+                    declare -a runtime_archives=('centos-x64.'$VER_RUNTIME_11'.tar.gz' 'debian-x64.'$VER_RUNTIME_11'.tar.gz' 'rhel-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.tar.gz')
+                fi
+                if [ $C_VERSION = "20" ]
+                then
+                    declare -a runtime_archives=('linux-x64.tar.gz')
+                fi
+            ;;
+            osx)
+                if [ $C_VERSION = "10" ]
+                then
                     declare -a runtime_archives=('osx-x64.'$VER_RUNTIME_10'.tar.gz')
-                ;;
-                win)
+                fi
+                if [ $C_VERSION = "11" ]
+                then
+                    declare -a runtime_archives=('centos-x64.'$VER_RUNTIME_11'.tar.gz' 'debian-x64.'$VER_RUNTIME_11'.tar.gz' 'rhel-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.tar.gz')
+                fi
+                if [ $C_VERSION = "20" ]
+                then
+                    declare -a runtime_archives=('osx-x64.tar.gz')
+                fi
+            ;;
+            win)
+                if [ $C_VERSION = "10" ]
+                then
                     declare -a runtime_archives=('win-x64.'$VER_RUNTIME_10'.zip' 'win-x86.'$VER_RUNTIME_10'.zip')
-                ;;
-                all)
+                fi
+                if [ $C_VERSION = "11" ]
+                then
+                    declare -a runtime_archives=('centos-x64.'$VER_RUNTIME_11'.tar.gz' 'debian-x64.'$VER_RUNTIME_11'.tar.gz' 'rhel-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.tar.gz')
+                fi
+                if [ $C_VERSION = "20" ]
+                then
+                    declare -a runtime_archives=('win-x64.zip' 'win-x86.zip')
+                fi
+            ;;
+            all)
+                if [ $C_VERSION = "10" ]
+                then
                     declare -a runtime_archives=('centos-x64.'$VER_RUNTIME_10'.tar.gz' 'debian-x64.'$VER_RUNTIME_10'.tar.gz' 'rhel-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_10'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_10'.tar.gz' 'osx-x64.'$VER_RUNTIME_10'.tar.gz' 'win-x64.'$VER_RUNTIME_10'.zip' 'win-x86.'$VER_RUNTIME_10'.zip')
-                ;;
-
-            esac      
-
-            for i in "${runtime_archives[@]}"
-                do
-                : 
-                tmp_dl=${RUNTIME}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${RUNTIME}"-"${i}
-                if [ $TESTMODE = true ]
-                    then
-                        echo $tmp_dl
-                    else
-                        echo $tmp_dl
-                        curl -o $tmp_dl
                 fi
-            done
-    fi
-
-    if [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
-        then
-            case "$C_PLATFORM" in
-                linux)
-                    declare -a runtime_archives=('centos-x64.'$VER_RUNTIME_11'.tar.gz' 'debian-x64.'$VER_RUNTIME_11'.tar.gz' 'fedora.24-x64.'$VER_RUNTIME_11'.tar.gz' 'rhel-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.tar.gz')
-                ;;
-                osx)
-                    declare -a runtime_archives=('osx-x64.'$VER_RUNTIME_11'.tar.gz')
-                ;;
-                win)
-                    declare -a runtime_archives=('win-x64.'$VER_RUNTIME_11'.zip' 'win-x86.'$VER_RUNTIME_11'.zip')
-                ;;
-                all)
-                    declare -a runtime_archives=('centos-x64.'$VER_RUNTIME_11'.tar.gz' 'debian-x64.'$VER_RUNTIME_11'.tar.gz' 'fedora.24-x64.'$VER_RUNTIME_11'.tar.gz' 'rhel-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.tar.gz' 'osx-x64.'$VER_RUNTIME_11'.tar.gz' 'win-x64.'$VER_RUNTIME_11'.zip' 'win-x86.'$VER_RUNTIME_11'.zip')
-                ;;
-            esac     
-        
-            for i in "${runtime_archives[@]}"
-                do
-                :
-                tmp_dl=${RUNTIME}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_11}"/"${RUNTIME}"-"${i}
-                if [ $TESTMODE = true ]
-                    then
-                        echo $tmp_dl
-                    else
-                        echo $tmp_dl
-                        curl -o $tmp_dl
+                if [ $C_VERSION = "11" ]
+                then
+                    declare -a runtime_archives=('centos-x64.'$VER_RUNTIME_11'.tar.gz' 'debian-x64.'$VER_RUNTIME_11'.tar.gz' 'rhel-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu-x64.'$VER_RUNTIME_11'.tar.gz' 'ubuntu.16.04-x64.'$VER_RUNTIME_11'.tar.gz')
                 fi
-            done
-    fi
+                if [ $C_VERSION = "20" ]
+                then
+                    declare -a runtime_archives=('linux-x64.tar.gz' 'osx-x64.tar.gz' 'win-x64.zip' 'win-x86.zip')
+                fi
+            ;;
+
+        esac   
+
+        for i in "${runtime_archives[@]}"
+            do
+            : 
+            if [ $C_VERSION = "10" ] || [ $C_VERSION = "11" ] || [ $C_VERSION = "00" ]
+            then
+                tmp_dl=${RUNTIME_10}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_10}"/"${RUNTIME_10}"-"${i}
+            fi
+            if [ $C_VERSION = "20" ]
+            then
+                tmp_dl=${RUNTIME_20}"-"${VER_RUNTIME_20}"-"${i}" "${BLOB_ROOT_RUNTIME}${VER_RUNTIME_20}"/"${RUNTIME_20}"-"${VER_RUNTIME_20}"-"${i}
+            fi
+            if [ $TESTMODE = true ]
+                then
+                    echo $tmp_dl
+                else
+                    echo $tmp_dl
+                    curl -o $tmp_dl
+            fi
+        done
 }
 
 #### Contol logic ####
@@ -489,12 +669,10 @@ if [ $C_ALL = true ]
             # SDK Binary Archives
             then
                 dl_sdk_binaries
-            elif [ $C_RUNTIME = true ]
+            fi
+            if [ $C_RUNTIME = true ]
             # Runtime Binary Archives
             then                
-                dl_runtime_binaries
-            else
-                dl_sdk_binaries
                 dl_runtime_binaries
             fi
     fi
@@ -505,13 +683,10 @@ if [ $C_ALL = true ]
             # SDK Installers
             then
                 dl_sdk_installers
-            elif [ $C_RUNTIME = true ]
+            fi
+            if [ $C_RUNTIME = true ]
             # Runtime installers
             then
-                dl_runtime_installers
-                dl_host_installers
-            else
-                dl_sdk_installers
                 dl_runtime_installers
                 dl_host_installers
             fi

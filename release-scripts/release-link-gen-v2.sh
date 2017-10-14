@@ -16,16 +16,19 @@
 
 # NOTE: filespec used for generation only works with .NET Core 2.0+
 
-# Versions
-VER_SDK="2.0.1"
-VER_RUNTIME="2.0.1"
+clear
+. ./release-versions.sh
 
-# Locations
-BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
-DLC="https://download.microsoft.com/download/"
-DLC_ROOT_SDK="7/3/A/73A3E4DC-F019-47D1-9951-0453676E059B"
-DLC_ROOT_RUNTIME="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
+# Versions
+# VER_SDK="2.0.1"
+# VER_RUNTIME="2.0.1"
+# 
+# # Locations
+# BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
+# BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
+# DLC="https://download.microsoft.com/download/"
+# DLC_ROOT_SDK="7/3/A/73A3E4DC-F019-47D1-9951-0453676E059B"
+# DLC_ROOT_RUNTIME="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
 
 # Names
 SDK="dotnet-sdk"
@@ -43,7 +46,7 @@ declare -a sdk_installers=('osx-x64.pkg' 'win-x64.exe' 'win-x86.exe' 'debian-x64
     for i in "${sdk_installers[@]}"
         do
         : 
-        printf "%s\n" $SDK"-"$VER_SDK"-"$i" "$BLOB_ROOT_SDK$VER_SDK"/"$SDK"-"$VER_SDK"-"$i" "$DLC$DLC_ROOT_SDK"/"$SDK"-"$VER_SDK"-"$i
+        printf "%s\n" $SDK"-"$VER_SDK_20"-"$i" "$BLOB_ROOT_SDK$VER_SDK_20"/"$SDK"-"$VER_SDK_20"-"$i" "$DLC$DLC_ROOT_SDK_20"/"$SDK"-"$VER_SDK_20"-"$i
     done
     printf "%s\n" 
 
@@ -54,7 +57,7 @@ declare -a runtime_installers=('osx-x64.pkg' 'win-x64.exe' 'win-x86.exe' 'debian
     for i in "${runtime_installers[@]}"
         do
         : 
-        printf "%s\n" $RUNTIME"-"$VER_RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$RUNTIME"-"$VER_RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$RUNTIME"-"$VER_RUNTIME"-"$i
+        printf "%s\n" $RUNTIME"-"$VER_RUNTIME_20"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME_20"/"$RUNTIME"-"$VER_RUNTIME_20"-"$i" "$DLC$DLC_ROOT_RUNTIME_20"/"$RUNTIME"-"$VER_RUNTIME_20"-"$i
     done
     printf "%s\n"
 
@@ -65,7 +68,7 @@ declare -a host_installers=('debian.8-x64.deb' 'debian.9-x64.deb' 'ubuntu.14.04-
     for i in "${host_installers[@]}"
     do
         : 
-        printf "%s\n" $HOST"-"$VER_RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$HOST"-"$VER_RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOST"-"$VER_RUNTIME"-"$i
+        printf "%s\n" $HOST"-"$VER_RUNTIME_20"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME_20"/"$HOST"-"$VER_RUNTIME_20"-"$i" "$DLC$DLC_ROOT_RUNTIME_20"/"$HOST"-"$VER_RUNTIME_20"-"$i
     done
     printf "%s\n"
 
@@ -76,7 +79,7 @@ declare -a hostfxr_installers=('debian.8-x64.deb' 'debian.9-x64.deb' 'ubuntu.14.
     for i in "${hostfxr_installers[@]}"
         do
         : 
-        printf "%s\n" $HOSTFXR"-"$VER_RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$HOSTFXR"-"$VER_RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$HOSTFXR"-"$VER_RUNTIME"-"$i
+        printf "%s\n" $HOSTFXR"-"$VER_RUNTIME_20"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME_20"/"$HOSTFXR"-"$VER_RUNTIME_20"-"$i" "$DLC$DLC_ROOT_RUNTIME_20"/"$HOSTFXR"-"$VER_RUNTIME_20"-"$i
     done
     printf "%s\n"
 
@@ -91,7 +94,7 @@ declare -a sdk_archives=('linux-x64.tar.gz' 'osx-x64.tar.gz' 'win-x64.zip' 'win-
     for i in "${sdk_archives[@]}"
         do
         : 
-        printf "%s\n" $SDK"-"$VER_SDK"-"$i" "$BLOB_ROOT_SDK$VER_SDK"/"$SDK"-"$VER_SDK"-"$i" "$DLC$DLC_ROOT_SDK"/"$SDK"-"$VER_SDK"-"$i
+        printf "%s\n" $SDK"-"$VER_SDK_20"-"$i" "$BLOB_ROOT_SDK$VER_SDK_20"/"$SDK"-"$VER_SDK_20"-"$i" "$DLC$DLC_ROOT_SDK_20"/"$SDK"-"$VER_SDK_20"-"$i
     done
     printf "%s\n"
 
@@ -102,6 +105,6 @@ declare -a runtime_archives=('linux-x64.tar.gz' 'osx-x64.tar.gz' 'win-x64.zip' '
     for i in "${runtime_archives[@]}"
         do
         : 
-        printf "%s\n" $RUNTIME"-"$VER_RUNTIME"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME"/"$RUNTIME"-"$VER_RUNTIME"-"$i" "$DLC$DLC_ROOT_RUNTIME"/"$RUNTIME"-"$VER_RUNTIME"-"$i
+        printf "%s\n" $RUNTIME"-"$VER_RUNTIME_20"-"$i" "$BLOB_ROOT_RUNTIME$VER_RUNTIME_20"/"$RUNTIME"-"$VER_RUNTIME_20"-"$i" "$DLC$DLC_ROOT_RUNTIME_20"/"$RUNTIME"-"$VER_RUNTIME_20"-"$i
     done
     printf "%s\n"

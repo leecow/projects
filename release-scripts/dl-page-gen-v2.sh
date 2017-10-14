@@ -4,45 +4,49 @@
 # Update the Version and Location variables
 # Run this script and redirect output to md file. eg ./dl-page-gen-v2 > 2.0.1-download.md
 
+clear
+
+. ./release-versions.sh
+
 # Versions
-VER_SDK="2.0.1"
-VER_RUNTIME="2.0.1"
+# VER_SDK="2.0.2"
+# VER_RUNTIME="2.0.0"
 
 # Locations
-BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
-BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
-BLOB_ROOT_CHECKSUM="https://dotnetcli.blob.core.windows.net/dotnet/checksums/"
-DLC="https://download.microsoft.com/download/"
-DLC_ROOT_SDK="7/3/A/73A3E4DC-F019-47D1-9951-0453676E059B"
-DLC_ROOT_RUNTIME="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
+# BLOB_ROOT_SDK="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/"
+# BLOB_ROOT_RUNTIME="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/"
+# BLOB_ROOT_CHECKSUM="https://dotnetcli.blob.core.windows.net/dotnet/checksums/"
+# DLC="https://download.microsoft.com/download/"
+# DLC_ROOT_SDK="7/3/A/73A3E4DC-F019-47D1-9951-0453676E059B"
+# DLC_ROOT_RUNTIME="0/F/6/0F65E15E-5341-4964-8D82-42376AEEDB10"
 
-printf "%s\n" "# .NET Core "$VER_RUNTIME
+printf "%s\n" "# .NET Core "$VER_RUNTIME_20
 printf "%s\n" 
-printf "%s\n" ".NET Core "$VER_RUNTIME" comprises:"
+printf "%s\n" ".NET Core "$VER_RUNTIME_20" comprises:"
 printf "%s\n" 
-printf "%s\n" "* .NET Core Runtime "$VER_RUNTIME
-printf "%s\n" "* .NET Core SDK "$VER_SDK
+printf "%s\n" "* .NET Core Runtime "$VER_RUNTIME_20
+printf "%s\n" "* .NET Core SDK "$VER_SDK_20
 
 printf "%s\n" 
 printf "%s\n" "|         | SDK Installer                                         | SDK Binaries                                                         | Runtime Installer                                                  | Runtime Binaries                                                   |"
 printf "%s\n" "| ------- | :---------------------------------------------------: | :-------------------------------------------------------------------:| :----------------------------------------------------------------: | :----------------------------------------------------------------: |"
-printf "%s\n" "| Windows | [32-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-$VER_SDK-win-x86.exe) / [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-win-x64.exe)  | [32-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-sdk-"$VER_SDK"-win-x86.zip) / [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-win-x64.zip) | [32-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-win-x86.exe) / [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-win-x64.exe) | [32-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-win-x86.zip) / [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-win-x64.zip) |"
-printf "%s\n" "| macOS   | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-$VER_SDK-osx-x64.pkg)  | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-osx-x64.tar.gz)| [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-osx-x64.pkg)      | [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-osx-x64.tar.gz)   |"
-printf "%s\n" "| Linux * | See installations steps below                         | [64-bit]("$DLC$DLC_ROOT_SDK"/dotnet-sdk-"$VER_SDK"-linux-x64.tar.gz)     | -                                                                  | [64-bit]("$DLC$DLC_ROOT_RUNTIME"/dotnet-runtime-"$VER_RUNTIME"-linux-x64.tar.gz) |"
+printf "%s\n" "| Windows | [32-bit]("$DLC$DLC_ROOT_SDK_20"/dotnet-sdk-$VER_SDK_20-win-x86.exe) / [64-bit]("$DLC$DLC_ROOT_SDK_20"/dotnet-sdk-"$VER_SDK_20"-win-x64.exe)  | [32-bit]("$DLC$DLC_ROOT_RUNTIME_20"/dotnet-sdk-"$VER_SDK_20"-win-x86.zip) / [64-bit]("$DLC$DLC_ROOT_SDK_20"/dotnet-sdk-"$VER_SDK_20"-win-x64.zip) | [32-bit]("$DLC$DLC_ROOT_RUNTIME_20"/dotnet-runtime-"$VER_RUNTIME_20"-win-x86.exe) / [64-bit]("$DLC$DLC_ROOT_RUNTIME_20"/dotnet-runtime-"$VER_RUNTIME_20"-win-x64.exe) | [32-bit]("$DLC$DLC_ROOT_RUNTIME_20"/dotnet-runtime-"$VER_RUNTIME_20"-win-x86.zip) / [64-bit]("$DLC$DLC_ROOT_RUNTIME_20"/dotnet-runtime-"$VER_RUNTIME_20"-win-x64.zip) |"
+printf "%s\n" "| macOS   | [64-bit]("$DLC$DLC_ROOT_SDK_20"/dotnet-sdk-$VER_SDK_20-osx-x64.pkg)  | [64-bit]("$DLC$DLC_ROOT_SDK_20"/dotnet-sdk-"$VER_SDK_20"-osx-x64.tar.gz)| [64-bit]("$DLC$DLC_ROOT_RUNTIME_20"/dotnet-runtime-"$VER_RUNTIME_20"-osx-x64.pkg)      | [64-bit]("$DLC$DLC_ROOT_RUNTIME_20"/dotnet-runtime-"$VER_RUNTIME_20"-osx-x64.tar.gz)   |"
+printf "%s\n" "| Linux * | See installations steps below                         | [64-bit]("$DLC$DLC_ROOT_SDK_20"/dotnet-sdk-"$VER_SDK_20"-linux-x64.tar.gz)     | -                                                                  | [64-bit]("$DLC$DLC_ROOT_RUNTIME_20"/dotnet-runtime-"$VER_RUNTIME_20"-linux-x64.tar.gz) |"
 
 printf "%s\n" 
 printf "%s\n" "**Checksum** files to verify downloads are available as follows:"
-printf "%s\n" "* [Checksums_Runtime]("$BLOB_ROOT_CHECKSUM$VER_RUNTIME"-runtime-sha.txt)"
-printf "%s\n" "* [Checksums_SDK]("$BLOB_ROOT_CHECKSUM$VER_SDK"-sdk-sha.txt)"
+printf "%s\n" "* [Checksums_Runtime]("$BLOB_ROOT_CHECKSUM$VER_RUNTIME_20"-runtime-sha.txt)"
+printf "%s\n" "* [Checksums_SDK]("$BLOB_ROOT_CHECKSUM$VER_SDK_20"-sdk-sha.txt)"
 printf "%s\n"
 printf "%s\n" "**Debug Symbols**"
-printf "%s\n" "* [Shared Framework]("$DLC$DLC_ROOT_RUNTIME"/corefx-2.0-symbols.zip)"
-printf "%s\n" "* [Runtime]("$DLC$DLC_ROOT_RUNTIME"/coreclr-2.0-symbols.zip)"
+printf "%s\n" "* [Shared Framework]("$DLC$DLC_ROOT_RUNTIME_20"/corefx-2.0-symbols.zip)"
+printf "%s\n" "* [Runtime]("$DLC$DLC_ROOT_RUNTIME_20"/coreclr-2.0-symbols.zip)"
 
 printf "%s\n" 
 printf "%s\n" "## Docker"
 printf "%s\n" 
-printf "%s\n" "Images for .NET Core "$VER_RUNTIME" are available on [Docker](https://hub.docker.com/r/microsoft/dotnet/)."
+printf "%s\n" "Images for .NET Core "$VER_RUNTIME_20" are available on [Docker](https://hub.docker.com/r/microsoft/dotnet/)."
 
 
 printf "%s\n" "## Installing .NET Core on Linux"
@@ -85,7 +89,7 @@ printf "%s\n" "Then, update the package cache and install .NET Core"
 printf "%s\n" 
 printf "%s\n" '```bash'
 printf "%s\n" 'sudo apt-get update'
-printf "%s\n" 'sudo apt-get install dotnet-sdk-'$VER_SDK
+printf "%s\n" 'sudo apt-get install dotnet-sdk-'$VER_SDK_20
 printf "%s\n" '```'
 printf "%s\n" 
 printf "%s\n" "### RHEL and Fedora based systems"
@@ -105,14 +109,14 @@ printf "%s\n" "#### Fedora, CentOS and Oracle Linux"
 printf "%s\n" 
 printf "%s\n" '```bash'
 printf "%s\n" 'sudo yum update'
-printf "%s\n" 'sudo yum install dotnet-sdk-'$VER_SDK
+printf "%s\n" 'sudo yum install dotnet-sdk-'$VER_SDK_20
 printf "%s\n" '```'
 printf "%s\n" 
 printf "%s\n" "#### SUSE Enterprise Linux and OpenSUSE"
 printf "%s\n" 
 printf "%s\n" '```bash'
 printf "%s\n" 'sudo zypper update'
-printf "%s\n" 'sudo zypper install dotnet-sdk-'$VER_SDK
+printf "%s\n" 'sudo zypper install dotnet-sdk-'$VER_SDK_20
 printf "%s\n" '```'
 printf "%s\n" 
 printf "%s\n" '**Note:** When installing the SDK, SUSE and OpenSUSE may report that nothing provides libcurl. libcurl should already be installed on supported versions of both distros. Run zypper search libcurl to confirm. The error will present 2 "solutions". Choose "Solution 2" to continue installing .NET Core.'
@@ -130,11 +134,11 @@ printf "%s\n" "## Windows Server Hosting"
 printf "%s\n" 
 printf "%s\n" "If you are looking to host stand-alone apps on Windows Servers, the ASP.NET Core Module for IIS can be installed separately on servers without installing .NET Core runtime. You can download the Windows (Server Hosting) installer and run the following command from an Administrator command prompt:"
 printf "%s\n" 
-printf "%s\n" "[DotNetCore."$VER_RUNTIME"-WindowsHosting.exe]("$DLC$DLC_ROOT_RUNTIME"/DotNetCore."$VER_RUNTIME"-WindowsHosting.exe)"
+printf "%s\n" "[DotNetCore."$VER_RUNTIME_20"-WindowsHosting.exe]("$DLC$DLC_ROOT_RUNTIME_20"/DotNetCore."$VER_RUNTIME_20"-WindowsHosting.exe)"
 printf "%s\n" 
 printf "%s\n" "### ASP.NET Core Package Store"
 printf "%s\n" 
 printf "%s\n" "The Runtime Package Store is installed by the .NET Core SDK and the Windows Server Hosting installer. If you need to install the Runtime Package Store separately, the following can be used."
 printf "%s\n" 
-printf "%s\n" "* [AspNetCore."$VER_RUNTIME".RuntimePackageStore_x64.exe]("$DLC$DLC_ROOT_RUNTIME"/AspNetCore."$VER_RUNTIME".RuntimePackageStore_x64.exe)"
-printf "%s\n" "* [AspNetCore."$VER_RUNTIME".RuntimePackageStore_x86.exe]("$DLC$DLC_ROOT_RUNTIME"/AspNetCore."$VER_RUNTIME".RuntimePackageStore_x86.exe)"
+printf "%s\n" "* [AspNetCore."$VER_RUNTIME_20".RuntimePackageStore_x64.exe]("$DLC$DLC_ROOT_RUNTIME_20"/AspNetCore."$VER_RUNTIME_20".RuntimePackageStore_x64.exe)"
+printf "%s\n" "* [AspNetCore."$VER_RUNTIME_20".RuntimePackageStore_x86.exe]("$DLC$DLC_ROOT_RUNTIME_20"/AspNetCore."$VER_RUNTIME_20".RuntimePackageStore_x86.exe)"
